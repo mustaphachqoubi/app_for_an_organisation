@@ -1,0 +1,252 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.p{
+  padding: 1.5rem;
+}
+
+.a{
+  color: black;
+  text-decoration: none;
+}
+
+.navbar{
+  backdrop-filter: blur(4px);
+  border-bottom: 2px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dark_nav{
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: black;
+  color: white;
+  border-bottom: 2px solid white;
+}
+
+.icons{
+  display: flex;
+  gap: 1rem;
+}
+
+.icon{
+  border: 2px solid black;
+  border-radius: 0.3rem;
+  padding: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  gap: 0.3rem;
+  font-weight: bold;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.icon:hover{
+  background-color: black;
+  color: white;
+}
+
+.dark_icon{
+  border: 2px solid black;
+  border-radius: 0.3rem;
+  padding: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  gap: 0.3rem;
+  font-weight: bold;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+
+  background-color: black;
+  color: white;
+  border: 2px solid white;
+}
+
+.dark_icon:hover{
+  color: black;
+  background-color: white;
+}
+
+.pointer{
+  cursor: pointer;
+}
+
+.notif{
+  background-color: red;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 100%;
+  position: absolute;
+  left: -5px;
+  top: -5px;
+}
+
+.home{
+  display: flex;
+  justify-content: center;
+}
+
+.dark_without_border{
+  background-color: black;
+  color: white;
+}
+
+.dark_with_border{
+  background-color: black;
+  color: white;
+  border: 2px solid white;
+}
+
+.dark_app{
+  background-color: black;
+  color: white;
+}
+
+.caption{
+  font-weight: bold;
+  font-size: 2rem;
+  padding: 1.5rem;
+}
+
+table, th, td {
+  border: 2px solid black;
+  border-collapse: collapse;
+  text-align: center;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  word-wrap: break-word;
+}
+
+.dark_table {
+  border: 2px solid white;
+  border-collapse: collapse;
+}
+
+table{
+  width: 100%;
+}
+
+th{
+  padding: 1rem;   
+  font-weight: bold; 
+}
+
+td{
+  padding: 1rem;
+  max-width: 10rem;
+  overflow: hidden;
+}
+
+td:first-child, td:last-child, th:nth-child(2), th:nth-child(5){
+  width: 1rem;
+}
+
+.red{
+  background-color: red;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 100%;
+}
+
+.yellow{
+  background-color: orange;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 100%;
+}
+.green{
+  background-color: green;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 100%;
+}
+
+.searchinp{
+  padding: 0.5rem 2rem;
+}
+
+.searchinp::placeholder{
+  font-size: .8rem;
+  letter-spacing: .2rem;
+}
+
+.searchbtn{
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+select{
+  padding: 0.5rem 1rem
+}
+
+.filter{
+  padding: .5rem 1rem
+}
+
+.printandaddcontainer{
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 1rem;
+}
+
+.print{
+  padding: .5rem 2rem;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+.addnew{
+  padding: .5rem 2rem;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+.addnewinput{
+  height: 100%;
+  width: 100%;
+  padding: 1rem;
+  font-weight: bold;
+}
+
+.addnewinput:focus{
+  border: 2px solid blue;
+}
+
+.addnewinputbtn{
+  height: 100%;
+  width: 100%;
+  padding: 1rem;
+  font-weight: bold;
+}
+
+.addnewtd{
+  padding: 0rem;  
+}
+
+.hidden{
+  display: none;
+}
+
+@media print {
+  .dontprint{
+    display: none;
+  }
+}
