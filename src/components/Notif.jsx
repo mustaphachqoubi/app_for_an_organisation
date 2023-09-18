@@ -1,32 +1,65 @@
 import Section from "./Section"
-import { ArriveeData } from "../dummy"
-import { DepartData } from "../dummy"
 import { useSelector } from "react-redux"
+import { useEffect, useState } from "react"
 
 const Notif = () => {
+
+    const [ arriveeTh, setArriveeTh ] = useState([])
+    const [ arriveeTd, setArriveeTd ] = useState([])
+     
+    const [ departTh, setDepartTh ] = useState([])
+    const [ departTd, setDepartTd ] = useState([])
+
+    const handleArrivee = async () => {
+        try{
+            const res = await fetch("http://localhost:5050/arrivee")
+            const data = await res.json()
+            setArriveeTh(data[0].ArriveeTh)
+            setArriveeTd(data[0].ArriveeTd)
+        } catch (err) {
+        }
+    }
+
+    const handleDepart = async () => {
+        try{
+            const res = await fetch("http://localhost:5050/depart")
+            const data = await res.json()
+            setDepartTh(data[0].DepartTh)
+            setDepartTd(data[0].DepartTd)
+        } catch (err) {
+        }
+    }
+
+    useEffect(() => {
+        handleArrivee()
+        handleDepart()
+    }, [])
 
     const { mood } = useSelector(state => state.mood)
     const style = { padding: "2rem", display: "flex", flexDirection: "column", justifyContent: "center" }
 
     return (
         <div style={style} >
-            <h2 style={{ background: "red", textAlign: "center", padding: "1rem", color: "white" }}>You are too late on this, You have to answer as soon as possible</h2>
+            {
+                arriveeTd === undefined && departTd === undefined ? (<h1>Loading...</h1>) : (
+                    <>
+<h2 style={{ background: "red", textAlign: "center", padding: "1rem", color: "white" }}>You are too late on this, You have to answer as soon as possible</h2>
             <table id="table" className={`${mood === "dark" ? "dark_table" : null}`}>
                 <caption className="caption">Depart</caption>
                 <thead>
                     <tr>
-                        {DepartData.DepartTh.map(h => (
-                            <th className={`${mood === "dark" ? "dark_table" : null}`} key={h.id}>{h.name}</th>
+                        {departTh.map(h => (
+                            <th className={`${mood === "dark" ? "dark_table" : null}`} key={h._id}>{h.name}</th>
                         ))}
                     </tr>
                 </thead>
 
                 <tbody>
-                    {DepartData.DepartTd.map(td => td.data.map(tdtt => tdtt.status === "red" && (
-                        <tr key={td.id}>
+                    {departTd.map(td => td.data.map(tdtt => tdtt.status === "red" && (
+                        <tr key={td._id}>
                             {td.data.map((tt, index) => (
                                 <td key={index} className={`${mood === "dark" ? "dark_table" : null}`}>
-                                    {tt.status === "red" ? <div className="red" /> : tt[Object.keys(tt)]}
+                                    {tt.status === "red" ? <div className="red" /> : tt[Object.keys(tt)[0]]}
                                 </td>
                             ))}
                         </tr>
@@ -39,18 +72,18 @@ const Notif = () => {
                 <caption className="caption">Arrivee</caption>
                 <thead>
                     <tr>
-                        {ArriveeData.ArriveeTh.map(h => (
-                            <th className={`${mood === "dark" ? "dark_table" : null}`} key={h.id}>{h.name}</th>
+                        {arriveeTh.map(h => (
+                            <th className={`${mood === "dark" ? "dark_table" : null}`} key={h._id}>{h.name}</th>
                         ))}
                     </tr>
                 </thead>
 
                 <tbody>
-                    {ArriveeData.ArriveeTd.map(td => td.data.map(tdtt => tdtt.status === "red" && (
-                        <tr key={td.id}>
+                    {arriveeTd.map(td => td.data.map(tdtt => tdtt.status === "red" && (
+                        <tr key={td._id}>
                             {td.data.map((tt, index) => (
                                 <td key={index} className={`${mood === "dark" ? "dark_table" : null}`}>
-                                    {tt.status === "red" ? <div className="red" /> : tt[Object.keys(tt)]}
+                                    {tt.status === "red" ? <div className="red" /> : tt[Object.keys(tt)[0]]}
                                 </td>
                             ))}
                         </tr>
@@ -58,7 +91,9 @@ const Notif = () => {
                     }
                 </tbody>
             </table>
-
+                    </>
+                )
+            }
         </div>
     )
 }
