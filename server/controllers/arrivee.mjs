@@ -19,6 +19,7 @@ export const createArrivee = async (req, res) => {
     }
 }
 
+// delete
 export const deleteArrivee = async (req, res) => {
   const { id } = req.params
 

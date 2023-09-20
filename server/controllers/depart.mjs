@@ -1,4 +1,5 @@
 import Depart from "../models/depart.mjs";
+import mongoose from 'mongoose'
 
 //  get
 export const getDepart = async (req, res) => {
@@ -17,4 +18,29 @@ export const createDepart = async (req, res) => {
     } catch (err) {
         res.status(400).json({ err: err.message })
     }
+}
+
+// delete
+export const deleteDepart = async (req, res) => {
+  const { id } = req.params
+
+  if(!mongoose.Types.ObjectId.isValid(id)){
+    res.status(404).json({ error: "id is not valid" })
+  }
+
+  const depart = await Depart.findOneAndUpdate(
+    {},
+    {
+      $pull: {
+        DepartTd: { "_id": id }
+      }
+    },
+    {new: true}
+  )
+
+  if(!depart){
+    res.status(404).json({ error: "There is no depart with this id found" })
+  }
+
+  res.status(200).json(depart)
 }
