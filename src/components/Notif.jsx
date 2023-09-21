@@ -33,6 +33,7 @@ const Notif = () => {
     useEffect(() => {
         handleArrivee()
         handleDepart()
+
     }, [])
 
     const { mood } = useSelector(state => state.mood)
@@ -41,9 +42,10 @@ const Notif = () => {
     return (
         <div style={style} >
             {
-                arriveeTd === undefined && departTd === undefined ? (<h1>Loading...</h1>) : (
+                arriveeTd.length === 0 && departTd.length === 0 ? (<h1>Loading...</h1>) : (
                     <>
 <h2 style={{ background: "red", textAlign: "center", padding: "1rem", color: "white" }}>You are too late on this, You have to answer as soon as possible</h2>
+            
             <table id="table" className={`${mood === "dark" ? "dark_table" : null}`}>
                 <caption className="caption">Depart</caption>
                 <thead>
@@ -66,7 +68,7 @@ const Notif = () => {
                     )) )
                     }
                 </tbody>
-            </table>
+            </table>            
 
             <table id="table" className={`${mood === "dark" ? "dark_table" : null}`}>
                 <caption className="caption">Arrivee</caption>
@@ -91,8 +93,8 @@ const Notif = () => {
                     }
                 </tbody>
             </table>
-                    </>
-                )
+        </>
+            )
             }
         </div>
     )

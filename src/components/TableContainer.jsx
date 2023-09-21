@@ -24,7 +24,7 @@ const TableContainer = ({ caption, th, td }) => {
 
         <div style={divStyle}>
         { 
-            th === undefined && td === undefined ? (<h1>Loading...</h1>) : (
+            th.length === 0 && td.length === 0 ? (<h1>Loading...</h1>) : (
             <>
         <FilterSystem td={td} type={caption}/>
         <div className="printandaddcontainer dontprint">
