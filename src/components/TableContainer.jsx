@@ -1,14 +1,11 @@
 import { useSelector } from "react-redux"
 import FilterSystem from "./FilterSystem"
-import { useEffect, useRef } from "react"
+import { useRef, useEffect } from "react"
 import { PrintTable } from "./PrintTable"
 import { AddData } from "./AddData"
+import { useForm } from "react-hook-form"
 
 const TableContainer = ({ caption, th, td }) => {
-
-    useEffect(() => {
-        td.map(t => t.data.map(d => console.log()))
-    })
 
     const style = {fontFamily: "Verdana, Geneva, Tahoma, sans-serif"}
     const divStyle = {display: "flex", flexDirection: "column", alignItems: "center"}
@@ -19,6 +16,12 @@ const TableContainer = ({ caption, th, td }) => {
     const handlePrint = () => {
         window.print()
     }
+    const { register, handleSubmit, watch } = useForm()
+    const onSubmit = data => console.log(data)
+
+    useEffect(() => {
+        console.log(watch("example"))
+    })
 
     return (
 
@@ -31,6 +34,11 @@ const TableContainer = ({ caption, th, td }) => {
         <PrintTable handlePrint={handlePrint}  />
         <AddData/>
         </div>
+        <form onSubmit={handleSubmit(onSubmit)}>
+        <input defaultValue="test" {...register("example")} />
+        <input type="submit" />
+        </form>
+
         <table ref={tableRef} id="table" style={style} className={`${mood === "dark" ? "dark_table" : null}`}>
                 <caption className="caption">{caption}</caption>
                     <thead>

@@ -25,7 +25,8 @@ const FilterSystem = ({ td, type }) => {
         else{
             dispatch(setFilteredData([]))
         }
-    } 
+    }
+    
     const handleDate = (date) => {
         if(date !== ""){
         dispatch(setFilteredData(td.filter(t => t.data.map(tt => tt.messageDate || tt.answerdate ).includes(date))))
