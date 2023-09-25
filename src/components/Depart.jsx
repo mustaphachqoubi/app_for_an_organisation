@@ -9,7 +9,7 @@ const Depart = ({ style }) => {
 
     const handleData = async () => {
         try{
-            const res = await fetch("http://localhost:5050/depart")
+            const res = await fetch(process.env.REACT_APP_DEPART)
             const data = await res.json()
             setDepartTh(data[0].DepartTh)
             setDepartTd(data[0].DepartTd)

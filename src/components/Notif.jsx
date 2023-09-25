@@ -12,7 +12,7 @@ const Notif = () => {
 
     const handleArrivee = async () => {
         try{
-            const res = await fetch("http://localhost:5050/arrivee")
+            const res = await fetch(process.env.REACT_APP_ARRIVEE)
             const data = await res.json()
             setArriveeTh(data[0].ArriveeTh)
             setArriveeTd(data[0].ArriveeTd)
@@ -22,7 +22,7 @@ const Notif = () => {
 
     const handleDepart = async () => {
         try{
-            const res = await fetch("http://localhost:5050/depart")
+            const res = await fetch(process.env.REACT_APP_DEPART)
             const data = await res.json()
             setDepartTh(data[0].DepartTh)
             setDepartTd(data[0].DepartTd)
