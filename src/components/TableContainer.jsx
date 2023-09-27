@@ -3,9 +3,14 @@ import FilterSystem from "./FilterSystem"
 import { useRef, useEffect } from "react"
 import { PrintTable } from "./PrintTable"
 import { AddData } from "./AddData"
-import { useForm } from "react-hook-form"
+import { useForm, SubmitHandler } from "react-hook-form"
+import { useLocation } from 'react-router-dom'
+import axios from 'axios'
 
 const TableContainer = ({ caption, th, td }) => {
+
+  const location = useLocation()
+  
 
     const style = {fontFamily: "Verdana, Geneva, Tahoma, sans-serif"}
     const divStyle = {display: "flex", flexDirection: "column", alignItems: "center"}
@@ -16,12 +21,20 @@ const TableContainer = ({ caption, th, td }) => {
     const handlePrint = () => {
         window.print()
     }
-    const { register, handleSubmit, watch } = useForm()
-    const onSubmit = data => console.log(data)
+  
+  const handleData = async (data) => {
+   console.log(data) 
+  }
 
-    useEffect(() => {
-        console.log(watch("example"))
-    })
+    const { register, handleSubmit, watch } = useForm()
+    const onSubmit = data => handleData(data)
+
+    const number = watch("yearly_order_number");
+    const messageDate = watch("date_number");
+    const reciever = watch("destination");
+    const subject = watch("deal_analyse");
+    const answerdate = watch("response_date_number");
+    const status = "red";
 
     return (
 
@@ -34,11 +47,8 @@ const TableContainer = ({ caption, th, td }) => {
         <PrintTable handlePrint={handlePrint}  />
         <AddData/>
         </div>
-        <form onSubmit={handleSubmit(onSubmit)}>
-        <input defaultValue="test" {...register("example")} />
-        <input type="submit" />
-        </form>
 
+            <form onSubmit={handleSubmit(onSubmit)}>
         <table ref={tableRef} id="table" style={style} className={`${mood === "dark" ? "dark_table" : null}`}>
                 <caption className="caption">{caption}</caption>
                     <thead>
@@ -51,11 +61,11 @@ const TableContainer = ({ caption, th, td }) => {
 
                     <tbody>
                     <tr className={`${addClicked === true ? "new" : "hidden"}`}>
-                        <td className="addnewtd"><input className="addnewinput" type="text"/></td>
-                        <td className="addnewtd"><input className="addnewinput" type="text"/></td>
-                        <td className="addnewtd"><input className="addnewinput" type="text"/></td>
-                        <td className="addnewtd"><input className="addnewinput" type="text"/></td>
-                        <td className="addnewtd"><input className="addnewinput" type="text"/></td>
+                        <td className="addnewtd"><input  {...register("number")} className="addnewinput" type="text"/></td>
+                        <td className="addnewtd"><input {...register("messageDate")} className="addnewinput" type="text"/></td>
+                        <td className="addnewtd"><input {...register("reciever")} className="addnewinput" type="text"/></td>
+                        <td className="addnewtd"><input {...register("subject")} className="addnewinput" type="text"/></td>
+                        <td className="addnewtd"><input {...register("answerdate")} className="addnewinput" type="text"/></td>
                         <td className="addnewtd"><button className="addnewinputbtn" type="submit">save</button></td>
                     </tr>
                     
@@ -86,6 +96,7 @@ const TableContainer = ({ caption, th, td }) => {
                                 }
                     </tbody>
             </table>
+            </form>
                 </>
             )
         }
