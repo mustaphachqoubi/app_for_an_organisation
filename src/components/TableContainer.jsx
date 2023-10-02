@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux"
 import FilterSystem from "./FilterSystem"
-import { useRef, useEffect } from "react"
+import { useRef, useEffect, useState } from "react"
 import { PrintTable } from "./PrintTable"
 import { AddData } from "./AddData"
 import { useForm, SubmitHandler } from "react-hook-form"
@@ -10,6 +10,9 @@ import axios from 'axios'
 const TableContainer = ({ caption, th, td }) => {
 
   const location = useLocation()
+  const date = useRef()
+
+  const [d, setDate] = useState()
   
 
     const style = {fontFamily: "Verdana, Geneva, Tahoma, sans-serif"}
@@ -21,10 +24,12 @@ const TableContainer = ({ caption, th, td }) => {
     const handlePrint = () => {
         window.print()
     }
+
   
   const handleData = async (data) => {
    console.log(data) 
   }
+
 
     const { register, handleSubmit, watch } = useForm()
     const onSubmit = data => handleData(data)
@@ -35,6 +40,19 @@ const TableContainer = ({ caption, th, td }) => {
     const subject = watch("deal_analyse");
     const answerdate = watch("response_date_number");
     const status = "red";
+
+  const convertTextToDate = (date) => {
+    let convertedDate;
+    convertedDate = new Date(date)
+    return convertedDate
+  }
+
+
+    useEffect(() => {
+    if(date.current){
+      console.log(convertTextToDate(date.current.value))
+    }
+  })
 
     return (
 
@@ -61,11 +79,11 @@ const TableContainer = ({ caption, th, td }) => {
 
                     <tbody>
                     <tr className={`${addClicked === true ? "new" : "hidden"}`}>
-                        <td className="addnewtd"><input  {...register("number")} className="addnewinput" type="text"/></td>
-                        <td className="addnewtd"><input {...register("messageDate")} className="addnewinput" type="text"/></td>
-                        <td className="addnewtd"><input {...register("reciever")} className="addnewinput" type="text"/></td>
-                        <td className="addnewtd"><input {...register("subject")} className="addnewinput" type="text"/></td>
-                        <td className="addnewtd"><input {...register("answerdate")} className="addnewinput" type="text"/></td>
+                        <td className="addnewtd"><input  {...register("number")} className="addnewinput" type="text" required/></td>
+                        <td className="addnewtd"><input {...register("messageDate")} className="addnewinput" type="date" required/></td>
+                        <td className="addnewtd"><input {...register("reciever")} className="addnewinput" type="text" required/></td>
+                        <td className="addnewtd"><input {...register("subject")} className="addnewinput" type="text" required/></td>
+                        <td className="addnewtd"><input {...register("answerdate")} className="addnewinput" type="date" required/></td>
                         <td className="addnewtd"><button className="addnewinputbtn" type="submit">save</button></td>
                     </tr>
                     
@@ -76,6 +94,7 @@ const TableContainer = ({ caption, th, td }) => {
                                     {d.status === "red" ? <div className="red " /> :
                                     d.status === "yellow" ? <div className="yellow " /> :
                                     d.status === "green" ? <div className="green " /> :
+                                    d.messageDate ? console.log(d.messageDate) :
                                     d[Object.keys(d)[0]]
                                     }
                                     </td>
