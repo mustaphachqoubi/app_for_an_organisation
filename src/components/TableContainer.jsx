@@ -30,9 +30,33 @@ const TableContainer = ({ caption, th, td }) => {
    console.log(data) 
   }
 
+  const convertTextToDate = (date) => {
+    let convertedDate;
+    convertedDate = new Date(date)
+    return convertedDate
+  }
+
+  const checkTheStatusOfData = (date) => {
+    let convertedDate = convertTextToDate(date)
+    const dateOfToday = new Date()
+    
+    console.log(date)
+    console.log(convertedDate)
+    console.log(dateOfToday)
+
+    if(convertedDate.getFullYear() === dateOfToday.getFullYear()){
+       console.log(true)
+    }else{
+        console.log(false)
+    }
+  }
+
 
     const { register, handleSubmit, watch } = useForm()
-    const onSubmit = data => handleData(data)
+    const onSubmit = data => {
+        handleData(data)
+        checkTheStatusOfData(data.messageDate)
+    }
 
     const number = watch("yearly_order_number");
     const messageDate = watch("date_number");
@@ -40,19 +64,6 @@ const TableContainer = ({ caption, th, td }) => {
     const subject = watch("deal_analyse");
     const answerdate = watch("response_date_number");
     const status = "red";
-
-  const convertTextToDate = (date) => {
-    let convertedDate;
-    convertedDate = new Date(date)
-    return convertedDate
-  }
-
-
-    useEffect(() => {
-    if(date.current){
-      console.log(convertTextToDate(date.current.value))
-    }
-  })
 
     return (
 
@@ -66,7 +77,9 @@ const TableContainer = ({ caption, th, td }) => {
         <AddData/>
         </div>
 
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={
+                handleSubmit(onSubmit)
+                }>
         <table ref={tableRef} id="table" style={style} className={`${mood === "dark" ? "dark_table" : null}`}>
                 <caption className="caption">{caption}</caption>
                     <thead>
@@ -94,7 +107,6 @@ const TableContainer = ({ caption, th, td }) => {
                                     {d.status === "red" ? <div className="red " /> :
                                     d.status === "yellow" ? <div className="yellow " /> :
                                     d.status === "green" ? <div className="green " /> :
-                                    d.messageDate ? console.log(d.messageDate) :
                                     d[Object.keys(d)[0]]
                                     }
                                     </td>
