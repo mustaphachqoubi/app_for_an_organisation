@@ -36,18 +36,17 @@ const TableContainer = ({ caption, th, td }) => {
     return convertedDate
   }
 
-  const checkTheStatusOfData = (date) => {
-    let convertedDate = convertTextToDate(date)
-    const dateOfToday = new Date()
-    
-    console.log(date)
-    console.log(convertedDate)
-    console.log(dateOfToday)
+  const checkTheStatusOfData = (messageDate, answerdate) => {
+    let convertedMessageDate = convertTextToDate(messageDate)
+    let convertedAnswerDate = convertTextToDate(answerdate)
 
-    if(convertedDate.getFullYear() === dateOfToday.getFullYear()){
-       console.log(true)
+    console.log(convertedMessageDate.getDay())
+    console.log(convertedAnswerDate.getDay())
+
+    if(convertedMessageDate.getDay() >= convertedAnswerDate.getMonth()){
+       console.log("red")
     }else{
-        console.log(false)
+        console.log("green")
     }
   }
 
@@ -55,7 +54,7 @@ const TableContainer = ({ caption, th, td }) => {
     const { register, handleSubmit, watch } = useForm()
     const onSubmit = data => {
         handleData(data)
-        checkTheStatusOfData(data.messageDate)
+        checkTheStatusOfData(data.messageDate, data.answerdate)
     }
 
     const number = watch("yearly_order_number");
