@@ -24,7 +24,6 @@ const TableContainer = ({ caption, th, td }) => {
     const handlePrint = () => {
         window.print()
     }
-
   
   const handleData = async (data) => {
    console.log(data) 
@@ -36,21 +35,30 @@ const TableContainer = ({ caption, th, td }) => {
     return convertedDate
   }
 
-  const checkTheStatusOfData = (messageDate, answerdate) => {
-    let convertedMessageDate = convertTextToDate(messageDate)
-    let convertedAnswerDate = convertTextToDate(answerdate)
+  const checkTheStatusOfData = (messageDate) => {
+    const messageDateTime = new Date(messageDate)
+      const todaysDate = new Date();
 
-    console.log(convertedMessageDate.getDay())
-    console.log(convertedAnswerDate.getDay())
+    const expectedAnswerDate = new Date(messageDateTime);
+    expectedAnswerDate.setDate(expectedAnswerDate.getDate() + 5);
 
-    if(convertedMessageDate.getDay() >= convertedAnswerDate.getMonth()){
-       console.log("red")
-    }else{
-        console.log("green")
-    }
+    const timeDifference = expectedAnswerDate - messageDateTime
+
+    console.log(timeDifference)
+
+  if (timeDifference <= 0) {
+    console.log("Red");
+  } else if (timeDifference <= 259200000) {
+    console.log("Yellow");
+  } else {
+    console.log("Green");
+  }
   }
 
-
+  const intervalId = setInterval(() => {
+  checkTheStatusOfData(messageDate);
+  }, 24 * 60 * 60 * 1000);
+    
     const { register, handleSubmit, watch } = useForm()
     const onSubmit = data => {
         handleData(data)
