@@ -63,12 +63,44 @@ const TableContainer = ({ caption, th, td }) => {
 
 
   const { register, handleSubmit, watch } = useForm();
-  const onSubmit = (data) => {
-    handleData(data);
+  const onSubmit = async (data) => {
+    const waitData = await data
+
+    if(waitData){
+        console.log(waitData)
+        handleData(data);
     if (location.pathname === "/depart") {
       axios
         .post(process.env.REACT_APP_DEPART, {
-         data 
+            DepartTh : [
+                {
+                    id: 1,
+                    name: "Date de depart et N° d'ordre annuel"
+                },
+                {
+                    id: 2,
+                    name: "Date et N° de la lettre depart"
+                },
+                {
+                    id: 3,
+                    name: "Désignation du destinataire"
+                },
+                {
+                    id: 4,
+                    name: "Analyse de l'affaire"
+                },
+                {
+                    id: 5,
+                    name: "Date et numéro de la réponse"
+                },
+                {
+                    id: 6,
+                    name: "Status"
+                }
+            ],
+            DepartTd : [
+                waitData
+            ] 
         })
         .then(function (response) {
           console.log(response);
@@ -77,6 +109,7 @@ const TableContainer = ({ caption, th, td }) => {
           console.log(error);
         });
     } else {
+    }
     }
   };
 
