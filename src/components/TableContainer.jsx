@@ -67,53 +67,71 @@ const TableContainer = ({ caption, th, td }) => {
     const waitData = await data
 
     if(waitData){
-        console.log(waitData)
         handleData(data);
     if (location.pathname === "/depart") {
-      axios
-        .post(process.env.REACT_APP_DEPART, {
-            DepartTh : [
-                {
-                    id: 1,
-                    name: "Date de depart et N° d'ordre annuel"
-                },
-                {
-                    id: 2,
-                    name: "Date et N° de la lettre depart"
-                },
-                {
-                    id: 3,
-                    name: "Désignation du destinataire"
-                },
-                {
-                    id: 4,
-                    name: "Analyse de l'affaire"
-                },
-                {
-                    id: 5,
-                    name: "Date et numéro de la réponse"
-                },
-                {
-                    id: 6,
-                    name: "Status"
-                }
-            ],
-            DepartTd : [
-                waitData
-            ] 
+      fetch(process.env.REACT_APP_DEPART, {
+        method: "POST",
+        body: JSON.stringify({
+          DepartTh : [
+            {
+                id: 1,
+                name: "Date de depart et N° d'ordre annuel"
+            },
+            {
+                id: 2,
+                name: "Date et N° de la lettre depart"
+            },
+            {
+                id: 3,
+                name: "Désignation du destinataire"
+            },
+            {
+                id: 4,
+                name: "Analyse de l'affaire"
+            },
+            {
+                id: 5,
+                name: "Date et numéro de la réponse"
+            },
+            {
+                id: 6,
+                name: "Status"
+            }
+        ],
+          DepartTd: [
+              {
+                data: [
+                      {
+                          number: 1
+                      },
+                      {
+                          messageDate: "2023-08-20"
+                      },
+                      {
+                          reciever: "ff"
+                      },
+                      {
+                          subject: "b"
+                      },
+                      {
+                          answerdate: "2023-10-17"
+                      },
+                      {
+                          status: "red"
+                      }
+                  ]
+              }
+          ]
+      
         })
-        .then(function (response) {
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    } else {
-    }
+      })
+      .then(response => response.json())
+      .then(json => console.log(json))
+    } else {}
     }
   };
 
-    const number = watch("yearly_order_number");
+  const number = watch("yearly_order_number");
   const messageDate = watch("date_number");
   const reciever = watch("destination");
   const subject = watch("deal_analyse");
