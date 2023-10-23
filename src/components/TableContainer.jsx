@@ -69,64 +69,30 @@ const TableContainer = ({ caption, th, td }) => {
     if(waitData){
         handleData(data);
     if (location.pathname === "/depart") {
-      fetch(process.env.REACT_APP_DEPART, {
+      fetch(process.env.REACT_APP_DEPART).then(response => response.json())
+      .then(data => {
+        if(data){
+          fetch(process.env.REACT_APP_DEPART, {
         method: "POST",
         body: JSON.stringify({
-          DepartTh : [
-            {
-                id: 1,
-                name: "Date de depart et N° d'ordre annuel"
-            },
-            {
-                id: 2,
-                name: "Date et N° de la lettre depart"
-            },
-            {
-                id: 3,
-                name: "Désignation du destinataire"
-            },
-            {
-                id: 4,
-                name: "Analyse de l'affaire"
-            },
-            {
-                id: 5,
-                name: "Date et numéro de la réponse"
-            },
-            {
-                id: 6,
-                name: "Status"
-            }
-        ],
-          DepartTd: [
-              {
-                data: [
-                      {
-                          number: 1
-                      },
-                      {
-                          messageDate: "2023-08-20"
-                      },
-                      {
-                          reciever: "ff"
-                      },
-                      {
-                          subject: "b"
-                      },
-                      {
-                          answerdate: "2023-10-17"
-                      },
-                      {
-                          status: "red"
-                      }
-                  ]
-              }
-          ]
-      
-        })
+          data
+      })
       })
       .then(response => response.json())
       .then(json => console.log(json))
+        }
+      })
+      .catch(error => console.error(error))
+
+      // fetch(process.env.REACT_APP_DEPART, {
+      //   method: "POST",
+      //   body: JSON.stringify({
+   
+        
+      // })
+      // })
+      // .then(response => response.json())
+      // .then(json => console.log(json))
     } else {}
     }
   };
@@ -140,9 +106,7 @@ const TableContainer = ({ caption, th, td }) => {
 
   return (
     <div style={divStyle}>
-      {th.length === 0 && td.length === 0 ? (
-        <h1>Loading...</h1>
-      ) : (
+      
         <>
           <FilterSystem td={td} type={caption} />
           <div className="printandaddcontainer dontprint">
@@ -269,7 +233,7 @@ const TableContainer = ({ caption, th, td }) => {
             </table>
           </form>
         </>
-      )}
+      
     </div>
   );
 };
