@@ -11,16 +11,11 @@ const DataSchema = new Schema({
     status: {type: String, require: true}
 })
 
-const DepartThSchema = new Schema({
-    name: { type: String, require: true }
-})
-
 const DepartTdSchema = new Schema({
     data: { type: [DataSchema], require: true }
 })
 
 const departSchema = new Schema({
-    DepartTh: { type: [DepartThSchema], require: true },
     DepartTd: { type: [DepartTdSchema], require: true }
 }, { timestamps: true })
 

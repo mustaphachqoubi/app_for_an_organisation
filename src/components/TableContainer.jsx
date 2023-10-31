@@ -6,6 +6,7 @@ import { AddData } from "./AddData";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
+import { DepartData, ArriveeData } from "../dummy"
 
 const TableContainer = ({ caption, th, td }) => {
   const location = useLocation();
@@ -83,16 +84,6 @@ const TableContainer = ({ caption, th, td }) => {
         }
       })
       .catch(error => console.error(error))
-
-      // fetch(process.env.REACT_APP_DEPART, {
-      //   method: "POST",
-      //   body: JSON.stringify({
-   
-        
-      // })
-      // })
-      // .then(response => response.json())
-      // .then(json => console.log(json))
     } else {}
     }
   };
@@ -124,14 +115,23 @@ const TableContainer = ({ caption, th, td }) => {
               <caption className="caption">{caption}</caption>
               <thead>
                 <tr>
-                  {th.map((h) => (
+                {
+                  location.pathname === "/depart" ? DepartData.DepartTh.map( (title) => (
                     <th
-                      className={`${mood === "dark" ? "dark_table" : null}`}
-                      key={h._id}
-                    >
-                      {h.name}
-                    </th>
-                  ))}
+                  className={`${mood === "dark" ? "dark_table" : null}`}
+                  key={title.id}
+                >
+                  {title.name}
+                </th>
+                  )) : ArriveeData.ArriveeTh.map( (title) => (
+                    <th
+                  className={`${mood === "dark" ? "dark_table" : null}`}
+                  key={title.id}
+                >
+                  {title.name}
+                </th>
+                  ))
+                }
                 </tr>
               </thead>
 
