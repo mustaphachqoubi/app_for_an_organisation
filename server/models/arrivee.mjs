@@ -11,16 +11,11 @@ const DataSchema = new Schema({
     status: {type: String, require: true}
 })
 
-const ArriveeThSchema = new Schema({
-    name: { type: String, require: true }
-})
-
 const ArriveeTdSchema = new Schema({
     data: { type: [DataSchema], require: true }
 })
 
 const arriveeSchema = new Schema({
-    ArriveeTh: { type: [ArriveeThSchema], require: true },
     ArriveeTd: { type: [ArriveeTdSchema], require: true }
 }, { timestamps: true })
 
