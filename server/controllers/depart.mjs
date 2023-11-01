@@ -8,18 +8,6 @@ export const getDepart = async (req, res) => {
     res.status(200).json(depart)
 }
 
-// update
-export const updateDepart = async (req, res) => {
-  const { DepartTd } = req.body
-
-  try{
-    const depart = await Depart.update({ DepartTd })
-    res.status(200).json(depart)
-  } catch (err) {
-    res.status(400).json({ err: err.message })
-  }
-}
-
 // post
 export const createDepart = async (req, res) => {
     const { DepartTd } = req.body
