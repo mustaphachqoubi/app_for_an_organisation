@@ -8,7 +8,7 @@ const DataSchema = new Schema({
     reciever: {type: String, require: true},
     subject: {type: String, require: true},
     answerdate: {type: String, require: true},
-    status: {type: String, require: true}
+    status: {type: String, require: false}
 })
 
 const DepartTdSchema = new Schema({
