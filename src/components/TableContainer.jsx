@@ -28,10 +28,6 @@ const TableContainer = ({ caption, th, td }) => {
     window.print();
   };
 
-  const handleData = async (data) => {
-    console.log(data);
-  };
-
   const convertTextToDate = (date) => {
     let convertedDate;
     convertedDate = new Date(date);
@@ -62,29 +58,15 @@ const TableContainer = ({ caption, th, td }) => {
     checkTheStatusOfData(messageDate);
   }, 24 * 60 * 60 * 1000);
 
-
   const { register, handleSubmit, watch } = useForm();
   const onSubmit = async (data) => {
     const waitData = await data
-
-    if(waitData){
-        handleData(data);
-    if (location.pathname === "/depart") {
-      fetch(process.env.REACT_APP_DEPART).then(response => response.json())
-      .then(data => {
-        if(data){
-          fetch(process.env.REACT_APP_DEPART, {
-        method: "POST",
-        body: JSON.stringify({
-          data
-      })
-      })
-      .then(response => response.json())
-      .then(json => console.log(json))
-        }
-      })
-      .catch(error => console.error(error))
-    } else {}
+    try {
+      const response = await axios.post(process.env.REACT_APP_DEPART, waitData);
+      console.log(response.data);
+      console.log(waitData);
+    } catch (error) {
+      console.error("Error:", error);
     }
   };
 
@@ -97,143 +79,149 @@ const TableContainer = ({ caption, th, td }) => {
 
   return (
     <div style={divStyle}>
-      
-        <>
-          <FilterSystem td={td} type={caption} />
-          <div className="printandaddcontainer dontprint">
-            <PrintTable handlePrint={handlePrint} />
-            <AddData />
-          </div>
 
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <table
-              ref={tableRef}
-              id="table"
-              style={style}
-              className={`${mood === "dark" ? "dark_table" : null}`}
-            >
-              <caption className="caption">{caption}</caption>
-              <thead>
-                <tr>
+      <>
+        <FilterSystem td={td} type={caption} />
+        <div className="printandaddcontainer dontprint">
+          <PrintTable handlePrint={handlePrint} />
+          <AddData />
+        </div>
+
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <table
+            ref={tableRef}
+            id="table"
+            style={style}
+            className={`${mood === "dark" ? "dark_table" : null}`}
+          >
+            <caption className="caption">{caption}</caption>
+            <thead>
+              <tr>
                 {
-                  location.pathname === "/depart" ? DepartData.DepartTh.map( (title) => (
+                  location.pathname === "/depart" ? DepartData.DepartTh.map((title) => (
                     <th
-                  className={`${mood === "dark" ? "dark_table" : null}`}
-                  key={title.id}
-                >
-                  {title.name}
-                </th>
-                  )) : ArriveeData.ArriveeTh.map( (title) => (
+                      className={`${mood === "dark" ? "dark_table" : null}`}
+                      key={title.id}
+                    >
+                      {title.name}
+                    </th>
+                  )) : ArriveeData.ArriveeTh.map((title) => (
                     <th
-                  className={`${mood === "dark" ? "dark_table" : null}`}
-                  key={title.id}
-                >
-                  {title.name}
-                </th>
+                      className={`${mood === "dark" ? "dark_table" : null}`}
+                      key={title.id}
+                    >
+                      {title.name}
+                    </th>
                   ))
                 }
-                </tr>
-              </thead>
+              </tr>
+            </thead>
 
-              <tbody>
-                <tr className={`${addClicked === true ? "new" : "hidden"}`}>
-                  <td className="addnewtd">
-                    <input
-                      {...register("number")}
-                      className="addnewinput"
-                      type="text"
-                      required
-                    />
-                  </td>
-                  <td className="addnewtd">
-                    <input
-                      {...register("messageDate")}
-                      className="addnewinput"
-                      type="date"
-                      required
-                    />
-                  </td>
-                  <td className="addnewtd">
-                    <input
-                      {...register("reciever")}
-                      className="addnewinput"
-                      type="text"
-                      required
-                    />
-                  </td>
-                  <td className="addnewtd">
-                    <input
-                      {...register("subject")}
-                      className="addnewinput"
-                      type="text"
-                      required
-                    />
-                  </td>
-                  <td className="addnewtd">
-                    <input
-                      {...register("answerdate")}
-                      className="addnewinput"
-                      type="date"
-                      required
-                    />
-                  </td>
-                  <td className="addnewtd">
-                    <button className="addnewinputbtn" type="submit">
-                      save
-                    </button>
-                  </td>
-                </tr>
+            <tbody>
+              <tr className={`${addClicked === true ? "new" : "hidden"}`}>
+                <td className="addnewtd">
+                  <input
+                    {...register("number")}
+                    className="addnewinput"
+                    type="text"
+                    required
+                  />
+                </td>
+                <td className="addnewtd">
+                  <input
+                    {...register("messageDate")}
+                    className="addnewinput"
+                    type="date"
+                    required
+                  />
+                </td>
+                <td className="addnewtd">
+                  <input
+                    {...register("reciever")}
+                    className="addnewinput"
+                    type="text"
+                    required
+                  />
+                </td>
+                <td className="addnewtd">
+                  <input
+                    {...register("subject")}
+                    className="addnewinput"
+                    type="text"
+                    required
+                  />
+                </td>
+                <td className="addnewtd">
+                  <input
+                    {...register("answerdate")}
+                    className="addnewinput"
+                    type="date"
+                    required
+                  />
+                </td>
+                <td className="addnewtd">
+                  <input
+                    {...register("status")}
+                    className="addnewinput"
+                    type="text"
+                    value={"red"}
+                  />
+                </td>
+                <td className="addnewtd">
+                  <button className="addnewinputbtn" type="submit">
+                    save
+                  </button>
+                </td>
+              </tr>
 
-                {filteredData.length <= 0
-                  ? td.map((t, index) => (
-                      <tr key={index}>
-                        {t.data.map((d, innerIndex) => (
-                          <td
-                            key={innerIndex}
-                            className={`${
-                              mood === "dark" ? "dark_table" : null
-                            }`}
-                          >
-                            {d.status === "red" ? (
-                              <div className="red " />
-                            ) : d.status === "yellow" ? (
-                              <div className="yellow " />
-                            ) : d.status === "green" ? (
-                              <div className="green " />
-                            ) : (
-                              d[Object.keys(d)[0]]
-                            )}
-                          </td>
-                        ))}
-                      </tr>
-                    ))
-                  : filteredData.map((filtered, index) => (
-                      <tr key={index}>
-                        {filtered.data.map((d, index) => (
-                          <td
-                            key={index}
-                            className={`${
-                              mood === "dark" ? "dark_table" : null
-                            }`}
-                          >
-                            {d.status === "red" ? (
-                              <div className="red" />
-                            ) : d.status === "yellow" ? (
-                              <div className="yellow" />
-                            ) : d.status === "green" ? (
-                              <div className="green" />
-                            ) : (
-                              d[Object.keys(d)[0]]
-                            )}
-                          </td>
-                        ))}
-                      </tr>
+              {filteredData.length <= 0
+                ? td.map((t, index) => (
+                  <tr key={index}>
+                    {t.data.map((d, innerIndex) => (
+                      <td
+                        key={innerIndex}
+                        className={`${mood === "dark" ? "dark_table" : null
+                          }`}
+                      >
+                        {d.status === "red" ? (
+                          <div className="red " />
+                        ) : d.status === "yellow" ? (
+                          <div className="yellow " />
+                        ) : d.status === "green" ? (
+                          <div className="green " />
+                        ) : (
+                          d[Object.keys(d)[0]]
+                        )}
+                      </td>
                     ))}
-              </tbody>
-            </table>
-          </form>
-        </>
-      
+                  </tr>
+                ))
+                : filteredData.map((filtered, index) => (
+                  <tr key={index}>
+                    {filtered.data.map((d, index) => (
+                      <td
+                        key={index}
+                        className={`${mood === "dark" ? "dark_table" : null
+                          }`}
+                      >
+                        {d.status === "red" ? (
+                          <div className="red" />
+                        ) : d.status === "yellow" ? (
+                          <div className="yellow" />
+                        ) : d.status === "green" ? (
+                          <div className="green" />
+                        ) : (
+                          d[Object.keys(d)[0]]
+                        )}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </form>
+      </>
+
     </div>
   );
 };
