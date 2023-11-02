@@ -58,16 +58,16 @@ const TableContainer = ({ caption, th, td }) => {
     checkTheStatusOfData(messageDate);
   }, 24 * 60 * 60 * 1000);
 
-
   const { register, handleSubmit, watch } = useForm();
   const onSubmit = async (data) => {
     const waitData = await data
-      if (waitData && location.pathname === "/depart") {
-        axios
-          .post(process.env.REACT_APP_DEPART, {
-            DepartTd: [waitData]
-          }).then(res => console.log(res))
-      }
+    try {
+      const response = await axios.post(process.env.REACT_APP_DEPART, waitData);
+      console.log(response.data);
+      console.log(waitData);
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   const number = watch("yearly_order_number");
