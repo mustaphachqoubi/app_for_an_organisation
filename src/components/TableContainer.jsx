@@ -62,7 +62,9 @@ const TableContainer = ({ caption, th, td }) => {
   const onSubmit = async (data) => {
     const waitData = await data
     try {
-      const response = await axios.post(process.env.REACT_APP_DEPART, waitData);
+      const response = await axios.post(process.env.REACT_APP_DEPART, {
+        DepartTd: [ data: [waitData] ]
+      });
       console.log(response.data);
       console.log(waitData);
     } catch (error) {

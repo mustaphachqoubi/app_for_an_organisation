@@ -13,7 +13,7 @@ const Depart = ({ style }) => {
             const data = await res.json()
             setDepartTh(data[0].DepartTh)
             setDepartTd(data[0].DepartTd)
-            
+           console.log(data) 
         } catch (err) {
         }
     }
