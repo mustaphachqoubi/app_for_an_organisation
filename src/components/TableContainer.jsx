@@ -63,7 +63,7 @@ const TableContainer = ({ caption, th, td }) => {
     const waitData = await data
     try {
       const response = await axios.post(process.env.REACT_APP_DEPART, {
-        DepartTd: [ data: [waitData] ]
+        DepartTd: [ waitData ]
       });
       console.log(response.data);
       console.log(waitData);
