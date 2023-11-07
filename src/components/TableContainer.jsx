@@ -177,9 +177,26 @@ const TableContainer = ({ caption, th, td }) => {
               </tr>
 
               {filteredData.length <= 0
-                ? td.map((t, index) => (
+                ? Object.keys(td).map((t, index) => (
                   <tr key={index}>
-                    {t.data.map((d, innerIndex) => (
+                    {/*Object.keys(td[0]).map(g => console.log(td[Object.keys(td)]._id))*/}
+
+                      <td
+                        className={`${mood === "dark" ? "dark_table" : null
+                          }`}
+                      >
+                        {td[Object.keys(td)].status === "red" ? (
+                          <div className="red " />
+                        ) : td[Object.keys(td)].status === "yellow" ? (
+                          <div className="yellow " />
+                        ) : td[Object.keys(td)].status === "green" ? (
+                          <div className="green " />
+                        ) : (
+                          td[Object.keys(td)]._id
+                        )}
+                      </td>
+
+                    {/*t.map((d, innerIndex) => (
                       <td
                         key={innerIndex}
                         className={`${mood === "dark" ? "dark_table" : null
@@ -195,7 +212,7 @@ const TableContainer = ({ caption, th, td }) => {
                           d[Object.keys(d)[0]]
                         )}
                       </td>
-                    ))}
+                        ))*/}
                   </tr>
                 ))
                 : filteredData.map((filtered, index) => (
