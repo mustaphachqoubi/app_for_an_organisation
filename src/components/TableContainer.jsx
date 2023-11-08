@@ -192,7 +192,7 @@ const TableContainer = ({ caption, th, td }) => {
                         ) : td[Object.keys(td)].status === "green" ? (
                           <div className="green " />
                         ) : (
-                          td[Object.keys(td)]._id
+                         Object.keys(t)[0]
                         )}
                       </td>
 
