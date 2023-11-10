@@ -79,6 +79,11 @@ const TableContainer = ({ caption, th, td }) => {
   const answerdate = watch("response_date_number");
   const status = "red";
 
+  useEffect(() => {
+    console.log(td)
+   td.length >= 1  && td.map(t => console.log(t))
+  })
+
   return (
     <div style={divStyle}>
 
@@ -176,45 +181,26 @@ const TableContainer = ({ caption, th, td }) => {
                 </td>
               </tr>
 
-              {filteredData.length <= 0
-                ? Object.keys(td).map((t, index) => (
-                  <tr key={index}>
-                    {/*Object.keys(td[0]).map(g => console.log(td[Object.keys(td)]._id))*/}
-
+              {filteredData.length <= 0 && td.length >= 1 
+                ? 
+                (
+                  <tr>
+                    {
+                      Object.keys(td[0]).map((t, index) => (
                       <td
+                          key={index}
                         className={`${mood === "dark" ? "dark_table" : null
                           }`}
                       >
-                        {td[Object.keys(td)].status === "red" ? (
-                          <div className="red " />
-                        ) : td[Object.keys(td)].status === "yellow" ? (
-                          <div className="yellow " />
-                        ) : td[Object.keys(td)].status === "green" ? (
-                          <div className="green " />
-                        ) : (
-                         Object.keys(t)[0]
-                        )}
+                        {
+                          t === "_id" ? <button className="delete">Delete</button> : td[0][`${t}`]
+                        }
                       </td>
-
-                    {/*t.map((d, innerIndex) => (
-                      <td
-                        key={innerIndex}
-                        className={`${mood === "dark" ? "dark_table" : null
-                          }`}
-                      >
-                        {d.status === "red" ? (
-                          <div className="red " />
-                        ) : d.status === "yellow" ? (
-                          <div className="yellow " />
-                        ) : d.status === "green" ? (
-                          <div className="green " />
-                        ) : (
-                          d[Object.keys(d)[0]]
-                        )}
-                      </td>
-                        ))*/}
-                  </tr>
                 ))
+                    }
+                  </tr>
+                )
+                
                 : filteredData.map((filtered, index) => (
                   <tr key={index}>
                     {filtered.data.map((d, index) => (

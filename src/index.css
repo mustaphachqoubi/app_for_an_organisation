@@ -146,6 +146,10 @@ td{
   overflow: hidden;
 }
 
+td:last-child{
+  padding: 0rem;
+}
+
 td:first-child, td:last-child, th:nth-child(2), th:nth-child(5){
   width: 1rem;
 }
@@ -231,6 +235,14 @@ select{
 }
 
 .addnewinputbtn{
+  height: 100%;
+  width: 100%;
+  padding: 1rem;
+  font-weight: bold;
+}
+
+.delete{
+  margin: 0;
   height: 100%;
   width: 100%;
   padding: 1rem;
